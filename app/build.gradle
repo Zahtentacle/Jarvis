@@ -1,0 +1,40 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.jarvis.wablast'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.jarvis.wablast"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0-FINAL"
+    }
+
+    buildTypes {
+        release {
+            [span_2](start_span)[span_3](start_span)// Security Hardening: Mengaktifkan R8 untuk proteksi kode[span_2](end_span)[span_3](end_span)
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    [span_4](start_span)// Library untuk manajemen antrean pesan (Jam Pasir -> Terkirim)[span_4](end_span)
+    implementation 'androidx.work:work-runtime-ktx:2.9.0'
+}
