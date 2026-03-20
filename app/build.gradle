@@ -12,22 +12,26 @@ android {
         minSdk 24
         targetSdk 34
         versionCode 1
-        versionName "1.0-FINAL"
+        versionName "1.0-STABLE"
     }
 
     buildTypes {
         release {
-            [span_2](start_span)[span_3](start_span)// Security Hardening: Mengaktifkan R8 untuk proteksi kode[span_2](end_span)[span_3](end_span)
+            // Proteksi terhadap Reverse Engineering
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
         }
+        debug {
+            minifyEnabled false
+        }
     }
-    
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    
+
     kotlinOptions {
         jvmTarget = '17'
     }
@@ -35,6 +39,6 @@ android {
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.12.0'
-    [span_4](start_span)// Library untuk manajemen antrean pesan (Jam Pasir -> Terkirim)[span_4](end_span)
     implementation 'androidx.work:work-runtime-ktx:2.9.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
 }
