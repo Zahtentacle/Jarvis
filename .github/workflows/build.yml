@@ -1,22 +1,31 @@
 name: Jarvis Build Production
 on: [push]
+
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
-      - name: Grant Execute Permission
-        run: chmod +x gradlew
+
+      # Langkah Paling Penting: Memaksa Versi Gradle 8.7
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.7
+
       - name: Build APK
-        run: ./gradlew clean assembleDebug --no-daemon
+        # Kita panggil perintah 'gradle' langsung, bukan './gradlew'
+        run: gradle :app:assembleDebug --no-daemon
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
