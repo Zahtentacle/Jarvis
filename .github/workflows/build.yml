@@ -1,33 +1,25 @@
 name: Jarvis Build Production
 on: [push]
-
 env:
-  # Menghilangkan peringatan deprecation Node.js 20
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        
+      - uses: actions/checkout@v4
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
-
       - name: Grant Execute Permission
         run: chmod +x gradlew
-
-      - name: Build With Gradle
-        # Menggunakan --no-daemon agar lebih stabil di server cloud
-        run: ./gradlew :app:assembleDebug --no-daemon
-
-      - name: Upload Final APK
+      - name: Build APK
+        run: ./gradlew clean assembleDebug --no-daemon
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: JARVIS_WA_BLAST_FINAL
           path: app/build/outputs/apk/debug/app-debug.apk
+          
